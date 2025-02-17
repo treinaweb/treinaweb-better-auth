@@ -15,7 +15,7 @@ export const Modal = ({ modalOpen, setModalOpen, children }: ModalProps) => {
     startTransition(() => {
       setModalOpen(false);
     });
-  }, [startTransition]);
+  }, [setModalOpen]);
 
   return (
     <dialog className={`modal ${modalOpen ? "modal-open" : ""}`}>
