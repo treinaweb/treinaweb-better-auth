@@ -1,5 +1,7 @@
-import { ITask } from "./types/ITask";
+"use server"
 
+import { revalidatePath } from "next/cache";
+import { ITask } from "./types/ITask";
 
 const baseUrl = 'http://localhost:3001';
 
@@ -19,10 +21,39 @@ export async function getAllTasks() {
   return res.json();
 }
 
-/* async function updateTask() {
-  // Update a task in the database
+export async function updateTask(formData: FormData) {
+  const id = formData.get('id') as string;
+  const text = formData.get('text') as string;
+
+  const updatedTask: ITask = {
+    id: id,
+    text: text,
+  }
+
+  try {
+    await fetch(`${baseUrl}/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedTask),
+    });
+
+    revalidatePath('/');    
+  } catch (error) {
+    console.error('Error updating task:', error);
+  }
 }
 
-async function deleteTask() {
-  // Delete a task from the database
-} */
+export async function deleteTask(formData: FormData) {
+  const id = formData.get('id') as string;
+
+  try {
+    await fetch(`${baseUrl}/tasks/${id}`, {
+      method: 'DELETE',
+    });
+    revalidatePath('/');
+  } catch (error) {
+    console.error('Error deleting task:', error);
+  }
+}
