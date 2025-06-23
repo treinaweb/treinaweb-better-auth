@@ -52,6 +52,7 @@ const AddTask = () => {
     if(state.success) {
       setModalOpen(false);
       router.refresh();
+      state.success = false;
     }
   }, [state.success, router]);
 
@@ -68,7 +69,7 @@ const AddTask = () => {
      <form action={formAction}>
       <h3 className="font-bold text-lg">Add New Task</h3>
       {state.message && (
-        <p className={state.success ? "text-green-500" : "text-red-500"}>
+        <p className={(state.message === 'Task criada com sucesso!') ? "text-green-500" : "text-red-500"}>
           {state.message}
         </p>
       )}

@@ -1,6 +1,5 @@
-import { FaRegTrashAlt } from "react-icons/fa";
-import { FiEdit } from "react-icons/fi";
 import AddTask from "./components/AddTask";
+import { TaskList } from "./components/TaskList";
 
 export default function Home() {
   return (
@@ -8,44 +7,7 @@ export default function Home() {
       <div className="text-center my-5 flex flex-col gap-4">
         <h1 className=" text-2xl font-bold">TASKS</h1>
         <AddTask />
-        <div className="overflow-x-auto">
-          <table className="table w-full">
-            <thead>
-              <tr>
-                <th>Tasks</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr key={'0000'}>
-                <td className="w-full">
-                  <input
-                    type="checkbox"
-                    className="checkbox checkbox-xs mr-5 checkbox-primary"
-                  />
-                  <span>Reunião as 18:00</span>
-                </td>
-                <td className="flex gap-5">
-                  <FiEdit color="blue" size={25}/>
-                  <FaRegTrashAlt color="red" size={25} />
-                </td>
-              </tr>
-              <tr key={'0001'}>
-                <td className="w-full">
-                  <input
-                    type="checkbox"
-                    className="checkbox checkbox-xs mr-5 checkbox-primary"
-                  />
-                  <span>Ligar para vidraçaria</span>
-                </td>
-                <td className="flex gap-5">
-                  <FiEdit color="blue" size={25}/>
-                  <FaRegTrashAlt color="red" size={25} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <TaskList />
       </div>
     </main>
   );

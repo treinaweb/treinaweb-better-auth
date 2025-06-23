@@ -14,11 +14,12 @@ export async function createTask(todo: ITask): Promise<ITask> {
   return await res.json();
 }
 
-/* async function getAllTasks() {
-  // Fetch all tasks from the database
+export async function getAllTasks() {
+  const res = await fetch(`${baseUrl}/tasks`, { cache: "no-store" });
+  return res.json();
 }
 
-async function updateTask() {
+/* async function updateTask() {
   // Update a task in the database
 }
 
