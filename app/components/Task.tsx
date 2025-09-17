@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteTask, updateTask } from "@/api";
+import { deleteTask, updateTask } from "@/app/service/task.service";
 import { ITask } from "@/types/ITask";
 import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";

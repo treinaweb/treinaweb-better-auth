@@ -1,42 +1,41 @@
 "use server"
 
 import { revalidatePath } from "next/cache";
-import { ITask } from "./types/ITask";
+import { ITask } from "../../types/ITask";
+import { PrismaClient } from "../generated/prisma";
 
-const baseUrl = 'http://localhost:3001';
+const prisma = new PrismaClient();
 
 export async function createTask(todo: ITask): Promise<ITask> {
-  const res = await fetch(`${baseUrl}/tasks`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(todo),
+  const task = await prisma.task.create({
+    data: {
+      text: todo.text,
+    }
   });
-  return await res.json();
+  revalidatePath('/');
+  return task;
 }
 
 export async function getAllTasks() {
-  const res = await fetch(`${baseUrl}/tasks`, { cache: "no-store" });
-  return res.json();
+  return await prisma.task.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    }
+  });
 }
 
 export async function updateTask(formData: FormData) {
   const id = formData.get('id') as string;
   const text = formData.get('text') as string;
 
-  const updatedTask: ITask = {
-    id: id,
-    text: text,
-  }
-
   try {
-    await fetch(`${baseUrl}/tasks/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
+    await prisma.task.update({
+      where: {
+        id: id
       },
-      body: JSON.stringify(updatedTask),
+      data: {
+        text: text
+      }
     });
 
     revalidatePath('/');    
@@ -49,8 +48,10 @@ export async function deleteTask(formData: FormData) {
   const id = formData.get('id') as string;
 
   try {
-    await fetch(`${baseUrl}/tasks/${id}`, {
-      method: 'DELETE',
+    await prisma.task.delete({
+      where: {
+        id: id
+      }
     });
     revalidatePath('/');
   } catch (error) {

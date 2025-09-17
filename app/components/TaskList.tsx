@@ -1,4 +1,4 @@
-import { getAllTasks } from "@/api";
+import { getAllTasks } from "@/app/service/task.service";
 import { ITask } from "@/types/ITask";
 import { Task } from "./Task";
 
