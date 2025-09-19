@@ -1,11 +1,76 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+"use client";
+import { useRouter } from "next/navigation";
+import { authClient } from "../lib/auth-client";
+import { useState } from "react";
+
+const initialState = {
+  error: "",
+  success: false,
+};
+
 export default function RegisterPage() {
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleRegisterUser(formData: FormData) {
+    setIsLoading(true);
+    setError(""); // Limpa erros anteriores  
+
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
+
+    // Validação de senhas
+    if (password !== confirmPassword) {
+      setError("As senhas não coincidem");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const { data, error: authError } = await authClient.signUp.email({
+        name: formData.get("name") as string,
+        email: formData.get("email") as string,
+        password: password,
+      });
+
+      if (authError) {
+        // Captura o erro do Better Auth
+        setError(authError.message || "Erro ao criar conta");
+      } else {
+        console.log("conta criada com sucesso", data);
+        router.push("/login");
+      }
+    } catch (err) {
+      setError("Erro inesperado ao criar conta");
+      console.error("erro ao criar conta", err);
+    } finally {
+      console.log("Loading finalizado:", false); // Debug
+      setIsLoading(false);
+    }
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-purple-800 to-purple-950">
       <div className="bg-zinc-900 px-6 py-8 rounded-xl shadow-lg w-full max-w-md border border-purple-700">
-        <h1 className="text-3xl font-bold mb-6 text-center text-purple-400">Criar Conta</h1>
-        <form className="space-y-5">
+        <h1 className="text-3xl font-bold mb-6 text-center text-purple-400">
+          Criar Conta
+        </h1>
+
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.currentTarget);
+            await handleRegisterUser(formData);
+          }}
+          className="space-y-5"
+        >
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-zinc-300 mb-1">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-zinc-300 mb-1"
+            >
               Nome
             </label>
             <input
@@ -17,7 +82,10 @@ export default function RegisterPage() {
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-zinc-300 mb-1"
+            >
               Email
             </label>
             <input
@@ -29,7 +97,10 @@ export default function RegisterPage() {
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-zinc-300 mb-1">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-zinc-300 mb-1"
+            >
               Senha
             </label>
             <input
@@ -41,7 +112,10 @@ export default function RegisterPage() {
             />
           </div>
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-zinc-300 mb-1">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-zinc-300 mb-1"
+            >
               Confirmar Senha
             </label>
             <input
@@ -52,16 +126,29 @@ export default function RegisterPage() {
               placeholder="********"
             />
           </div>
+          {error && (
+            <div className="bg-red-900/50 border border-red-500 text-red-200 px-3 py-2 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
           <button
             type="submit"
-            className="w-full bg-purple-700 text-white py-2 rounded-lg font-semibold hover:bg-purple-800 transition"
+            disabled={isLoading}
+            className={`w-full py-2 rounded-lg font-semibold transition ${
+              isLoading
+                ? "bg-gray-600 text-gray-300 cursor-not-allowed opacity-50"
+                : "bg-purple-700 text-white hover:bg-purple-800"
+            }`}
           >
-            Registrar
+            {isLoading ? "Criando conta..." : "Registrar"}
           </button>
         </form>
         <p className="mt-6 text-center text-sm text-zinc-400">
-          Já tem uma conta?{' '}
-          <a href="/login" className="text-purple-400 font-semibold hover:underline">
+          Já tem uma conta?{" "}
+          <a
+            href="/login"
+            className="text-purple-400 font-semibold hover:underline"
+          >
             Faça login
           </a>
         </p>
