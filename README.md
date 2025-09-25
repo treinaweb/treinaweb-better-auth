@@ -1,36 +1,13 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+#### Projetos base
+Projeto | Download
+------ | ------
+Projeto Base | [Download](https://github.com/treinaweb/treinaweb-better-auth/archive/22bf13ae0e18a88a34c164824b6820d290bed7a4.zip)
 
-## Getting Started
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Lista de commits
+Aula | Commit | Link
+------ | ------ | -----
+Aula 2 | Páginas de login | [Download](https://github.com/treinaweb/treinaweb-better-auth/archive/516104a939121e78b96f55cd9fc1cda7d2a3c68c.zip)
+Aula 2 | Autenticação por email | [Download](https://github.com/treinaweb/treinaweb-better-auth/archive/1ff2c818648157abe50209ac088aacb10523c0eb.zip)
+Aula 2 | Auteticação por providers | [Download](https://github.com/treinaweb/treinaweb-better-auth/archive/f7640a01832b2948e39047545d5b800637b52e0a.zip)
+Aula 2 | Autorizaçãoo e plugins | [Download](https://github.com/treinaweb/treinaweb-better-auth/archive/4006b06cd1c6c57a3b2caa8ac6edfa347aaf8895.zip)
