@@ -16,7 +16,12 @@ export default async function Home() {
 
   return (
     <main className="max-w-4xl mx-auto mt-4 text-end">
-      {session && (<ButtonSignOut />)}
+      {session && (
+      <div className="flex items-center justify-end gap-2">
+        <h3>{session.user.name} | {session.user.email} |</h3>
+        <ButtonSignOut />
+      </div>
+      )}
       <div className="text-center my-5 flex flex-col gap-4">
         <h1 className=" text-2xl font-bold">TASKS</h1>
         <AddTask />
